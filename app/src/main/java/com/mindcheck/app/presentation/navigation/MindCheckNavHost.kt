@@ -14,6 +14,8 @@ import com.mindcheck.app.presentation.dashboard.DashboardScreen
 import com.mindcheck.app.presentation.dashboard.DashboardViewModel
 import com.mindcheck.app.presentation.focus.FocusSelectionScreen
 import com.mindcheck.app.presentation.focus.FocusSelectionViewModel
+import com.mindcheck.app.presentation.report.WellnessReportsScreen
+import com.mindcheck.app.presentation.report.WellnessReportsViewModel
 import com.mindcheck.app.presentation.welcome.WelcomeScreen
 import com.mindcheck.app.presentation.welcome.WelcomeViewModel
 
@@ -38,6 +40,12 @@ fun MindCheckNavHost(
         DashboardViewModel(
             dailyCheckInRepository = container?.dailyCheckInRepository,
             preferencesRepository = container?.userPreferencesRepository
+        )
+    }
+
+    val reportsViewModel: WellnessReportsViewModel = viewModel {
+        WellnessReportsViewModel(
+            repository = container?.wellnessReportRepository
         )
     }
 
@@ -79,7 +87,19 @@ fun MindCheckNavHost(
                 onAdjustFocusClick = {
                     navController.navigate(Screen.FocusSelection.route)
                 },
+                onViewReportsClick = {
+                    navController.navigate(Screen.WellnessReports.route)
+                },
                 viewModel = dashboardViewModel
+            )
+        }
+
+        composable(Screen.WellnessReports.route) {
+            WellnessReportsScreen(
+                onBackClick = {
+                    navController.popBackStack()
+                },
+                viewModel = reportsViewModel
             )
         }
     }

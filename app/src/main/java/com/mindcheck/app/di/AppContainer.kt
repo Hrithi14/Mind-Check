@@ -11,6 +11,8 @@ import com.mindcheck.app.data.repository.SleepRepository
 import com.mindcheck.app.data.repository.SleepRepositoryImpl
 import com.mindcheck.app.data.repository.UserPreferencesRepository
 import com.mindcheck.app.data.repository.UserPreferencesRepositoryImpl
+import com.mindcheck.app.data.repository.WellnessReportRepository
+import com.mindcheck.app.data.repository.WellnessReportRepositoryImpl
 
 interface AppContainer {
     val database: MindCheckDatabase
@@ -18,6 +20,7 @@ interface AppContainer {
     val sleepRepository: SleepRepository
     val habitRepository: HabitRepository
     val userPreferencesRepository: UserPreferencesRepository
+    val wellnessReportRepository: WellnessReportRepository
 }
 
 class DefaultAppContainer(private val context: Context) : AppContainer {
@@ -40,5 +43,9 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
 
     override val userPreferencesRepository: UserPreferencesRepository by lazy {
         UserPreferencesRepositoryImpl(context.userPreferencesDataStore)
+    }
+
+    override val wellnessReportRepository: WellnessReportRepository by lazy {
+        WellnessReportRepositoryImpl(database.wellnessReportDao())
     }
 }

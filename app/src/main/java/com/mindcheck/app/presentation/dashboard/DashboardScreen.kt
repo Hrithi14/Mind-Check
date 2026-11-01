@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Air
+import androidx.compose.material.icons.outlined.Assessment
 import androidx.compose.material.icons.outlined.Bedtime
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.CrisisAlert
@@ -61,6 +62,7 @@ import com.mindcheck.app.presentation.focus.FocusArea
 @Composable
 fun DashboardScreen(
     onAdjustFocusClick: () -> Unit,
+    onViewReportsClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     viewModel: DashboardViewModel = viewModel()
 ) {
@@ -81,6 +83,13 @@ fun DashboardScreen(
             MindCheckTopBar(
                 title = "Mind Check",
                 actions = {
+                    IconButton(onClick = onViewReportsClick) {
+                        Icon(
+                            imageVector = Icons.Outlined.Assessment,
+                            contentDescription = "Wellness Reports",
+                            tint = MaterialTheme.colorScheme.onBackground
+                        )
+                    }
                     IconButton(onClick = onAdjustFocusClick) {
                         Icon(
                             imageVector = Icons.Outlined.Tune,
@@ -304,6 +313,14 @@ fun DashboardScreen(
                             text = "Score engine activates in Phase 4. It will calculate a non-clinical awareness score from your real sleep consistency, stress check-ins, and balanced screen time. No simulated data is shown.",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+
+                        Spacer(modifier = Modifier.height(12.dp))
+
+                        MindCheckButton(
+                            text = "View Stored Wellness Reports",
+                            onClick = onViewReportsClick,
+                            leadingIcon = Icons.Outlined.Assessment
                         )
                     }
                 }

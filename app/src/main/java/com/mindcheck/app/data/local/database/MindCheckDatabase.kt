@@ -7,17 +7,20 @@ import androidx.room.RoomDatabase
 import com.mindcheck.app.data.local.dao.DailyCheckInDao
 import com.mindcheck.app.data.local.dao.HabitDao
 import com.mindcheck.app.data.local.dao.SleepLogDao
+import com.mindcheck.app.data.local.dao.WellnessReportDao
 import com.mindcheck.app.data.local.entity.DailyCheckInEntity
 import com.mindcheck.app.data.local.entity.HabitCompletionEntity
 import com.mindcheck.app.data.local.entity.HabitEntity
 import com.mindcheck.app.data.local.entity.SleepLogEntity
+import com.mindcheck.app.data.local.entity.WellnessReportEntity
 
 @Database(
     entities = [
         DailyCheckInEntity::class,
         SleepLogEntity::class,
         HabitEntity::class,
-        HabitCompletionEntity::class
+        HabitCompletionEntity::class,
+        WellnessReportEntity::class
     ],
     version = DatabaseMigrations.CURRENT_VERSION,
     exportSchema = false
@@ -27,6 +30,7 @@ abstract class MindCheckDatabase : RoomDatabase() {
     abstract fun dailyCheckInDao(): DailyCheckInDao
     abstract fun sleepLogDao(): SleepLogDao
     abstract fun habitDao(): HabitDao
+    abstract fun wellnessReportDao(): WellnessReportDao
 
     companion object {
         @Volatile
@@ -45,6 +49,7 @@ abstract class MindCheckDatabase : RoomDatabase() {
                 DatabaseMigrations.DATABASE_NAME
             )
                 .addMigrations(*DatabaseMigrations.ALL_MIGRATIONS)
+                .fallbackToDestructiveMigration()
                 .build()
         }
     }
